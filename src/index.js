@@ -6,7 +6,8 @@ export default ({types: t}) => {
       ImportDeclaration(path, state) {
         const givenPath = path.node.source.value;
         const rootPathSuffix = state && state.opts && typeof state.opts.rootPathSuffix === 'string' ? state.opts.rootPathSuffix : '';
-        if (pluginHelper.startsWith(givenPath, '~/')) {
+        const rootPathPrefix = state && state.opts && typeof state.opts.rootPathPrefix === 'string' ? state.opts.rootPathPrefix : '~';
+        if (pluginHelper.startsWith(givenPath, rootPathPrefix + '/')) {
           path.node.source.value = pluginHelper.transformRelativeToRootPath(givenPath, state.file.opts.filename, rootPathSuffix);
         }
       }
